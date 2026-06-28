@@ -2,19 +2,23 @@
 
 > Seu kit para criar agentes de IA personalizados e automatizar tarefas em minutos — 100% grátis.
 
+**Versão:** 1.0
+**Lançamento:** 2026-06-28
+**Operado por:** AgenciAR MKT Digital — https://github.com/cspgabriel
+
 ---
 
 ## 📂 O que você recebeu
 
-| Arquivo | O que é | Valor |
-|---------|---------|-------|
-| **AGENTE-PESSOAL-IA.md** | O agente completo com 3 mentores (Mestre Mentor + Arquiteto + Validador) — pronto para colar no ChatGPT/Claude/Gemini | R$ 197 |
-| **PROMPT-MESTRE.md** | Versão compacta e otimizada do agente — para quem quer colar e usar em 30 segundos | R$ 97 |
-| **BONUS-01-CRIAR-AGENTES.md** | Manual completo: framework, template universal, 10 exemplos prontos, pipeline de agentes | R$ 97 |
-| **BONUS-02-AGENDAR-TAREFAS.md** | Guia de automação: 20 tarefas para automatizar HOJE, sistema de agenda semanal, frameworks | R$ 97 |
-| **BONUS-03-PROMPTS-PRONTOS.md** | 50 prompts prontos para copiar e usar — de analista de produtividade a copywriter | R$ 47 |
+| Arquivo | Tamanho | O que é | Valor |
+|---------|---------|---------|-------|
+| **AGENTE-PESSOAL-IA.md** | 12KB / 311 linhas | O agente completo com 3 mentores (Mestre Mentor + Arquiteto + Validador) — pronto para colar no ChatGPT/Claude/Gemini | R$ 197 |
+| **PROMPT-MESTRE.md** | 5.7KB | Versão compacta e otimizada do agente — para quem quer colar e usar em 30 segundos | R$ 97 |
+| **BONUS-01-CRIAR-AGENTES.md** | 11.5KB | Manual completo: framework, template universal, 10 exemplos prontos, pipeline de agentes | R$ 97 |
+| **BONUS-02-AGENDAR-TAREFAS.md** | 9.5KB | Guia de automação: 20 tarefas para automatizar HOJE, sistema de agenda semanal, frameworks | R$ 97 |
+| **BONUS-03-PROMPTS-PRONTOS.md** | 16KB | 50 prompts prontos para copiar e usar — de analista de produtividade a copywriter | R$ 47 |
 
-**Valor total:** R$ 535  
+**Valor total:** R$ 535
 **Você pagou:** GRÁTIS
 
 ---
@@ -56,13 +60,44 @@
 | **Estudante** | Resumidor Acadêmico | 5h/semana |
 | **Profissional CLT** | Planejador Semanal | 3h/semana |
 | **Freelancer** | Analista de Concorrentes | 4h/semana |
+| **SDR/Vendedor** | Qualificador de Leads | 5h/semana |
+| **Dev** | Documentador de Código | 4h/semana |
+| **Designer** | Briefinger Criativo | 3h/semana |
+
+---
+
+## 🧠 Como o Squad funciona (3 mentores)
+
+```
+🎯 Mestre Mentor (fase 1-2)
+   ↓ Faz 6 perguntas + mapeia tarefas + desenha blueprint
+🔧 Arquiteto de Agentes (fase 3-5)
+   ↓ Constrói prompt (persona + missão + contexto + ferramentas + output)
+🛡️ Validador de Agentes (gate de qualidade)
+   ↓ Testa com 4 critérios: Prontidão, Especificidade, Autonomia, Robustez
+   ↓ Só libera agente aprovado
+```
+
+Cada mentor é ativado pelo prompt mestre. Sequência é rígida — não pula etapas.
 
 ---
 
 ## 📞 Suporte
 
-Dúvidas? Acesse o repositório no GitHub ou entre em contato.
+- **Repositório:** https://github.com/cspgabriel/agente-pessoal-ia
+- **Issues:** https://github.com/cspgabriel/agente-pessoal-ia/issues
+- **Email:** contato@agenciarmktdigital.com.br
 
 ---
 
-© 2026 Agente Pessoal de Ia. Metodologia baseada em boas práticas de arquitetura de agentes de IA.
+## 🔄 Histórico de versões
+
+### v1.0 (2026-06-28)
+- Lançamento inicial
+- 5 arquivos: agente completo + prompt mestre + 3 bônus
+- Landing page + portal de download publicados
+- Integração Brevo para captura de emails
+
+---
+
+© 2026 Agente Pessoal de IA. Metodologia baseada em boas práticas de arquitetura de agentes de IA.

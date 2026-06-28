@@ -45,6 +45,13 @@ export default async function handler(req, res) {
     attributes: {
       SOURCE: source,
       SIGNUP_AT: new Date().toISOString(),
+      // UTM tracking (permite segmentação por canal de aquisição)
+      UTM_SOURCE: body.utm_source || '',
+      UTM_MEDIUM: body.utm_medium || '',
+      UTM_CAMPAIGN: body.utm_campaign || '',
+      UTM_CONTENT: body.utm_content || '',
+      UTM_TERM: body.utm_term || '',
+      REFERRER: body.referrer || '',
     },
     listIds,
     updateEnabled: true, // atualiza se já existe

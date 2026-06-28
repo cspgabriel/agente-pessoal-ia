@@ -534,10 +534,24 @@ async function handleLead(){
   result.style.color = 'var(--cyan)';
   result.textContent = '⏳ Enviando seu kit...';
   try {
+    // Captura UTMs da URL para passar adiante (tracking de canal)
+    const urlParams = new URLSearchParams(window.location.search);
+    const utm = {
+      utm_source:   urlParams.get('utm_source')   || undefined,
+      utm_medium:   urlParams.get('utm_medium')   || undefined,
+      utm_campaign: urlParams.get('utm_campaign') || undefined,
+      utm_content:  urlParams.get('utm_content')  || undefined,
+      utm_term:     urlParams.get('utm_term')     || undefined,
+    };
     const res = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, source: 'agente-pessoal-ia-landing' }),
+      body: JSON.stringify({
+        email,
+        source: 'agente-pessoal-ia-landing',
+        referrer: document.referrer || null,
+        ...utm,
+      }),
     });
     const data = await res.json().catch(() => ({}));
     if(!res.ok || !data.ok){
@@ -545,7 +559,9 @@ async function handleLead(){
     }
     result.style.color = 'var(--green)';
     result.textContent = '✅ Pronto! Redirecionando para seu kit gratuito...';
-    const dest = (data.redirect || 'portal.html') + '?email=' + encodeURIComponent(email);
+    // Preserva UTMs no redirect pro portal
+    const utmQuery = Object.entries(utm).filter(([,v]) => v).map(([k,v]) => k + '=' + encodeURIComponent(v)).join('&');
+    const dest = (data.redirect || 'portal.html') + '?email=' + encodeURIComponent(email) + (utmQuery ? '&' + utmQuery : '');
     setTimeout(() => { window.location.href = dest; }, 900);
   } catch(e){
     result.style.color = 'var(--red)';
@@ -554,6 +570,25 @@ async function handleLead(){
     btn.style.opacity = '1';
   }
 }
+
+// ─── Pageview tracking ───
+(function(){
+  try {
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'landing_view',
+        source: 'agente-pessoal-ia-landing',
+        referrer: document.referrer || null,
+        utm_source:   new URLSearchParams(location.search).get('utm_source'),
+        utm_medium:   new URLSearchParams(location.search).get('utm_medium'),
+        utm_campaign: new URLSearchParams(location.search).get('utm_campaign'),
+      }),
+      keepalive: true
+    }).catch(() => {});
+  } catch (_) {}
+})();
 
 // ─── Dashboard data ───
 (function(){

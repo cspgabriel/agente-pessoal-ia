@@ -40,23 +40,23 @@ footer{margin-top:20px;color:#7a8194;font-size:.78rem}
   <div class="download-list">
     <div class="item">
       <div class="info"><div class="name">🤖 AGENTE-PESSOAL-IA.md</div><div class="desc">O agente completo com 3 mentores — cole no ChatGPT/Claude/Gemini</div></div>
-      <a class="btn" href="produto/AGENTE-PESSOAL-IA.md" download>Baixar</a>
+      <a class="btn download-btn" href="produto/AGENTE-PESSOAL-IA.md" download data-file="AGENTE-PESSOAL-IA.md">Baixar</a>
     </div>
     <div class="item">
       <div class="info"><div class="name">⚡ PROMPT-MESTRE.md</div><div class="desc">Versão compacta — cole e use em 30 segundos</div></div>
-      <a class="btn" href="produto/PROMPT-MESTRE.md" download>Baixar</a>
+      <a class="btn download-btn" href="produto/PROMPT-MESTRE.md" download data-file="PROMPT-MESTRE.md">Baixar</a>
     </div>
     <div class="item">
       <div class="info"><div class="name">📘 BONUS-01 — Manual de Criação de Agentes</div><div class="desc">Framework, template universal, 10 exemplos prontos</div></div>
-      <a class="btn" href="produto/BONUS-01-CRIAR-AGENTES.md" download>Baixar</a>
+      <a class="btn download-btn" href="produto/BONUS-01-CRIAR-AGENTES.md" download data-file="BONUS-01-CRIAR-AGENTES.md">Baixar</a>
     </div>
     <div class="item">
       <div class="info"><div class="name">📅 BONUS-02 — Guia de Automação de Tarefas</div><div class="desc">20 tarefas para automatizar + sistema de agenda semanal</div></div>
-      <a class="btn" href="produto/BONUS-02-AGENDAR-TAREFAS.md" download>Baixar</a>
+      <a class="btn download-btn" href="produto/BONUS-02-AGENDAR-TAREFAS.md" download data-file="BONUS-02-AGENDAR-TAREFAS.md">Baixar</a>
     </div>
     <div class="item">
       <div class="info"><div class="name">🔥 BONUS-03 — 50 Prompts Prontos</div><div class="desc">De analista a estrategista — copie e use imediatamente</div></div>
-      <a class="btn" href="produto/BONUS-03-PROMPTS-PRONTOS.md" download>Baixar</a>
+      <a class="btn download-btn" href="produto/BONUS-03-PROMPTS-PRONTOS.md" download data-file="BONUS-03-PROMPTS-PRONTOS.md">Baixar</a>
     </div>
   </div>
 
@@ -83,6 +83,46 @@ footer{margin-top:20px;color:#7a8194;font-size:.78rem}
 const params = new URLSearchParams(window.location.search);
 const email = params.get('email');
 if(email) document.getElementById('emailDisplay').textContent = '📧 ' + email;
+
+// ─── UTM capture (preserva da URL → passa pro tracking) ───
+const utm = {
+  utm_source:   params.get('utm_source')   || '',
+  utm_medium:   params.get('utm_medium')   || '',
+  utm_campaign: params.get('utm_campaign') || '',
+  utm_content:  params.get('utm_content')  || '',
+  utm_term:     params.get('utm_term')     || ''
+};
+
+// ─── Pixel tracking — dispara ao carregar e ao clicar em download ───
+function track(event, extra = {}) {
+  const payload = {
+    event,
+    email,
+    source: 'agente-pessoal-ia-portal',
+    referrer: document.referrer || null,
+    ...utm,
+    ...extra,
+  };
+  // fire-and-forget; não bloqueia UX
+  try {
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(() => {});
+  } catch (_) {}
+}
+
+// Track pageview
+track('portal_view');
+
+// Track cada download click
+document.querySelectorAll('.download-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    track('download', { file: btn.dataset.file });
+  });
+});
 </script>
 </body>
 </html>
