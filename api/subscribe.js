@@ -17,9 +17,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   // Parse body (Vercel já parseia JSON automaticamente quando Content-Type é application/json)
-  let email, source = 'agente-pessoal-ia';
+  let email, source = 'agente-pessoal-ia', body = {};
   try {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
+    body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
     email = (body.email || '').trim().toLowerCase();
     if (body.source) source = String(body.source).slice(0, 64);
   } catch (e) {
