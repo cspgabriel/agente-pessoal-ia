@@ -520,17 +520,39 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
 })();
 
 // ─── Lead capture ───
-function handleLead(){
+async function handleLead(){
   const email = document.getElementById('leadEmail').value.trim();
   const result = document.getElementById('leadResult');
-  if(!email || !email.includes('@')){
+  if(!email || !email.includes('@') || !email.includes('.')){
     result.style.color = 'var(--red)';
     result.textContent = '⚠️ Digite um email válido.';
     return;
   }
+  const btn = document.querySelector('#cta-form .btn-cta');
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
   result.style.color = 'var(--cyan)';
-  result.textContent = '✅ Pronto! Redirecionando para seu kit gratuito...';
-  setTimeout(() => { window.location.href = 'portal.html?email=' + encodeURIComponent(email); }, 1200);
+  result.textContent = '⏳ Enviando seu kit...';
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source: 'agente-pessoal-ia-landing' }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if(!res.ok || !data.ok){
+      throw new Error(data.error || 'Falha no cadastro');
+    }
+    result.style.color = 'var(--green)';
+    result.textContent = '✅ Pronto! Redirecionando para seu kit gratuito...';
+    const dest = (data.redirect || 'portal.html') + '?email=' + encodeURIComponent(email);
+    setTimeout(() => { window.location.href = dest; }, 900);
+  } catch(e){
+    result.style.color = 'var(--red)';
+    result.textContent = '❌ ' + (e.message || 'Erro ao enviar. Tente de novo.');
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }
 }
 
 // ─── Dashboard data ───
