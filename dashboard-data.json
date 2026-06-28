@@ -1,0 +1,80 @@
+{
+  "generatedAt": "2026-06-28T00:00:00Z",
+  "product": "Agente Pessoal de IA",
+  "tagline": "Célula de 3 agentes de IA para criar, treinar e orquestrar agentes pessoais",
+  "summary": {
+    "totalRuns": 1,
+    "successRuns": 1,
+    "successRate": 100,
+    "latestStatus": "success",
+    "latestAt": "2026-06-28T00:00:00Z",
+    "targetsCount": 1,
+    "agentsCount": 3,
+    "phasesCount": 5
+  },
+  "runs": [
+    {
+      "id": "2026-06-28-000000",
+      "iso": "2026-06-28T00:00:00Z",
+      "target": "Profissional de Marketing",
+      "targetUrl": "",
+      "theme": "Automação de Conteúdo para Marketing Digital",
+      "summary": "O squad criou um agente 'Estrategista de LinkedIn' personalizado para um profissional de marketing que gastava 8h/semana criando conteúdo. Agora o agente gera pautas, escreve legendas e sugere hashtags em 15 minutos. Tempo recuperado: 6h/semana.",
+      "status": "success",
+      "overallScore": 95,
+      "metrics": {
+        "precoOriginal": "R$ 0",
+        "precoAncorado": "R$ 535",
+        "valorPercebido": "R$ 535",
+        "reducaoRisco": "0 — grátis"
+      },
+      "phases": [
+        {
+          "n": 1,
+          "agent": "Mestre Mentor",
+          "agentId": "mestre-mentor",
+          "icon": "🎯",
+          "phase": "Mapeamento e Descida",
+          "status": "passed",
+          "detail": "Entrevista em 6 perguntas mapeando rotina do profissional de marketing."
+        },
+        {
+          "n": 2,
+          "agent": "Mestre Mentor",
+          "agentId": "mestre-mentor",
+          "icon": "🎯",
+          "phase": "Diagnóstico de Automação",
+          "status": "passed",
+          "detail": "Identificou 8h/semana perdidas com criação manual de conteúdo."
+        },
+        {
+          "n": 3,
+          "agent": "Arquiteto de Agentes",
+          "agentId": "arquiteto-agentes",
+          "icon": "🔧",
+          "phase": "Construção do Agente",
+          "status": "passed",
+          "detail": "Criou agente 'Estrategista de LinkedIn' com persona, missão e prompt prontos."
+        },
+        {
+          "n": 4,
+          "agent": "Validador de Agentes",
+          "agentId": "validador-agentes",
+          "icon": "🛡️",
+          "phase": "Validação de Prontidão",
+          "status": "passed",
+          "detail": "Teste de Prontidão 4/4 aprovado. Agente autossuficiente."
+        },
+        {
+          "n": 5,
+          "agent": "Arquiteto de Agentes",
+          "agentId": "arquiteto-agentes",
+          "icon": "🔧",
+          "phase": "Roteiro de Expansão",
+          "status": "passed",
+          "detail": "Cronograma semanal + blueprint para Agente #2 (Analista de Concorrentes)."
+        }
+      ]
+    }
+  ]
+}

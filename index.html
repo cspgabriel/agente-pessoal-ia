@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agente Pessoal de IA — Crie Seus Próprios Agentes e Automatize Tarefas</title>
+  <meta name="description" content="Aprenda a criar agentes de IA personalizados e automatizar tarefas repetitivas — mesmo sem saber programar. Kit completo e gratuito." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:  #05080f;
+      --bg2: #0a0e1a;
+      --bg3: #0f1525;
+      --bg4: #161e36;
+      --border: rgba(255,255,255,.06);
+      --border2: rgba(255,255,255,.12);
+      --text: #f0f2f5;
+      --text-dim: #c8ccd4;
+      --muted: #7a8194;
+      --muted2: #9ca3b4;
+      --cyan: #06b6d4;
+      --cyan-dim: rgba(6,182,212,.12);
+      --cyan-glow: rgba(6,182,212,.25);
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --red: #ef4444;
+      --red-dim: rgba(239,68,68,.08);
+      --green: #22c55e;
+      --green-dim: rgba(34,197,94,.1);
+      --shadow: rgba(0,0,0,.6);
+      --card: rgba(10,14,26,.85);
+      --nav-h: 64px;
+      --ease-out-expo: cubic-bezier(.16,1,.3,1);
+      --ease-spring: cubic-bezier(.34,1.56,.64,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden}
+    code,pre{font-family:'JetBrains Mono',monospace}
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(6,182,212,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,.015) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease-out-expo),transform .7s var(--ease-out-expo)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .no-js .reveal{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+    .d1{transition-delay:80ms}.d2{transition-delay:160ms}.d3{transition-delay:240ms}.d4{transition-delay:320ms}
+    @keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    mark{background:linear-gradient(135deg,var(--cyan),var(--blue),var(--purple),var(--blue),var(--cyan));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease infinite}
+    @keyframes ctaPulse{0%,100%{box-shadow:0 8px 28px var(--cyan-glow)}50%{box-shadow:0 8px 48px rgba(6,182,212,.45),0 0 80px rgba(6,182,212,.12)}}
+    .btn-cyan{animation:ctaPulse 2.5s ease-in-out infinite}
+    .btn-cyan:hover{animation:none}
+    @keyframes floatGlow{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-20px) scale(1.05)}}
+    .hero::before{animation:floatGlow 6s ease-in-out infinite}
+    @keyframes badgePulse{0%,100%{opacity:1}50%{opacity:.7}}
+    .hook-badge{animation:badgePulse 2s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    .term-cursor{display:inline-block;width:8px;height:15px;background:var(--cyan);margin-left:4px;vertical-align:middle;animation:blink 1s step-end infinite}
+    .term-line{opacity:0;transform:translateX(-8px);transition:opacity .3s ease,transform .3s ease}
+    .term-line.typed{opacity:1;transform:translateX(0)}
+    @keyframes dotPulse{0%,100%{box-shadow:0 0 8px var(--cyan-glow)}50%{box-shadow:0 0 16px var(--cyan-glow),0 0 32px rgba(6,182,212,.15)}}
+    .nav-brand .dot{animation:dotPulse 2s ease-in-out infinite}
+    .stack-item{opacity:0;transform:translateX(-16px);transition:opacity .4s var(--ease-out-expo),transform .4s var(--ease-out-expo),background .2s}
+    .stack-box.visible .stack-item{opacity:1;transform:translateX(0)}
+    .stack-box.visible .stack-item:nth-child(1){transition-delay:0ms}
+    .stack-box.visible .stack-item:nth-child(2){transition-delay:80ms}
+    .stack-box.visible .stack-item:nth-child(3){transition-delay:160ms}
+    .stack-box.visible .stack-item:nth-child(4){transition-delay:240ms}
+    .stack-box.visible .stack-item:nth-child(5){transition-delay:320ms}
+    .stack-box.visible .stack-item:nth-child(6){transition-delay:400ms}
+    .section-wrap{max-width:820px;margin:0 auto;padding:0 24px}
+    .section-wide{max-width:1060px;margin:0 auto;padding:0 24px}
+    .cyan{color:var(--cyan)}.red{color:var(--red)}.green{color:var(--green)}.purple{color:var(--purple)}
+    .strike{text-decoration:line-through;color:var(--red);opacity:.85}
+    strong.em{color:var(--cyan)}
+    .separator{border:none;border-top:1px solid var(--border);margin:0}
+    .top-nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);height:48px;background:rgba(10,14,26,.75);border:1px solid var(--border);border-radius:100px;display:inline-flex;align-items:center;gap:4px;padding:4px 6px;z-index:200;backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 8px 32px rgba(0,0,0,.35)}
+    .nav-brand{display:flex;align-items:center;gap:8px;padding:0 12px;font-weight:900;font-size:.82rem;letter-spacing:-.01em;cursor:pointer;white-space:nowrap;color:var(--text)}
+    .nav-brand .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow)}
+    .nav-tab{background:none;border:none;font-family:inherit;font-size:.82rem;font-weight:700;color:var(--muted);padding:8px 16px;border-radius:100px;cursor:pointer;transition:all .2s}
+    .nav-tab:hover{color:var(--text)}
+    .nav-tab.active{background:var(--cyan);color:#000}
+    .nav-right{padding:0 6px}
+    .tab-pane{display:none;position:relative;z-index:1}
+    .tab-pane.active{display:block}
+    .hero{padding:140px 24px 60px;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--cyan-glow) 0%,transparent 70%);opacity:.35;pointer-events:none;z-index:0}
+    .hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
+    .hook-badge{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-family:'JetBrains Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:6px 16px;border-radius:100px;margin-bottom:28px;color:var(--cyan);background:var(--cyan-dim);border:1px solid rgba(6,182,212,.15)}
+    .hero h1{font-size:clamp(2.2rem,5.5vw,4rem);font-weight:900;letter-spacing:-.04em;line-height:1.08;margin-bottom:20px;max-width:820px;margin-left:auto;margin-right:auto}
+    .hero-sub{font-size:1.1rem;color:var(--muted2);max-width:640px;margin:0 auto 36px;line-height:1.7}
+    .hero-sub strong{color:var(--text);font-weight:700}
+    .cta-cluster{display:flex;flex-direction:column;align-items:center;gap:14px}
+    .btn-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 40px;border-radius:14px;font-size:1.05rem;font-weight:800;text-decoration:none;border:none;cursor:pointer;transition:all .25s var(--ease-out-expo);width:100%;max-width:440px}
+    .btn-cta:active{transform:scale(.97)}
+    .btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#000;box-shadow:0 8px 28px var(--cyan-glow)}
+    .btn-cyan:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(6,182,212,.35)}
+    .btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
+    .btn-ghost:hover{border-color:var(--border2);background:var(--bg4)}
+    .micro-proof{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+    .micro-proof .pip{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green)}
+    .terminal-wrap{padding:0 24px;max-width:780px;margin:0 auto 0}
+    .terminal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;overflow:hidden;box-shadow:0 24px 64px var(--shadow)}
+    .term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
+    .term-dot{width:10px;height:10px;border-radius:50%}
+    .term-dot.r{background:#ff5f57}.term-dot.y{background:#febc2e}.term-dot.g{background:#28c840}
+    .term-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);margin-left:auto}
+    .term-body{padding:20px;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.9;color:var(--muted2)}
+    .term-body .cmd{color:var(--cyan);font-weight:700}
+    .term-body .ok{color:var(--green)}
+    .term-body .warn{color:var(--red)}
+    .term-body .info{color:var(--blue)}
+    .term-body .val{color:var(--cyan);font-weight:700}
+    .pain{padding:100px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--red-dim),transparent 60%)}
+    .pain-header{text-align:center;margin-bottom:48px}
+    .pain-header .eyebrow{font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:12px}
+    .pain-header h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+    .pain-header p{color:var(--muted);font-size:1rem;max-width:640px;margin:0 auto}
+    .pain-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:860px;margin:0 auto}
+    @media(max-width:640px){.pain-cards{grid-template-columns:1fr}}
+    .pain-card{background:var(--card);border:1px solid rgba(239,68,68,.08);border-radius:16px;padding:28px;display:flex;gap:16px;transition:border-color .3s,transform .3s var(--ease-out-expo)}
+    .pain-card:hover{border-color:rgba(239,68,68,.2);transform:translateY(-3px)}
+    .pain-icon{font-size:1.6rem;flex-shrink:0;width:44px;height:44px;background:var(--red-dim);border-radius:12px;display:grid;place-items:center}
+    .pain-card h4{font-size:1rem;font-weight:800;margin-bottom:6px;letter-spacing:-.01em}
+    .pain-card p{font-size:.88rem;color:var(--muted);line-height:1.55}
+    .mechanism{padding:100px 24px}
+    .mech-header{text-align:center;margin-bottom:56px}
+    .mech-header .eyebrow{font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin-bottom:12px}
+    .mech-header h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+    .mech-header p{color:var(--muted);font-size:1rem;max-width:640px;margin:0 auto}
+    .cyber-box{max-width:780px;margin:0 auto 48px;background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:36px;position:relative;overflow:hidden}
+    .cyber-box::before{content:'';position:absolute;top:-60%;right:-30%;width:400px;height:400px;background:radial-gradient(circle,var(--cyan-dim),transparent 70%);pointer-events:none}
+    .cyber-eq{font-family:'JetBrains Mono',monospace;font-size:clamp(.75rem,1.8vw,1rem);text-align:center;padding:20px 0;color:var(--text);line-height:2;position:relative;z-index:1}
+    .cyber-eq .up{color:var(--green);font-weight:700}
+    .cyber-eq .down{color:var(--red);font-weight:700}
+    .cyber-eq .accent{color:var(--cyan);font-weight:700}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:860px;margin:0 auto}
+    @media(max-width:768px){.steps{grid-template-columns:1fr}}
+    .step-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:all .3s var(--ease-out-expo)}
+    .step-card:hover{border-color:var(--cyan-dim);transform:translateY(-4px);box-shadow:0 12px 32px var(--shadow)}
+    .step-num{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:1.1rem;font-weight:900;color:#000;margin:0 auto 16px}
+    .step-card:nth-child(1) .step-num{background:var(--cyan)}
+    .step-card:nth-child(2) .step-num{background:var(--blue)}
+    .step-card:nth-child(3) .step-num{background:var(--purple)}
+    .step-card h3{font-size:1.05rem;font-weight:800;margin-bottom:8px;letter-spacing:-.01em}
+    .step-card p{font-size:.86rem;color:var(--muted);line-height:1.55}
+    .proof{padding:80px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2)}
+    .proof-header{text-align:center;margin-bottom:40px}
+    .proof-header h2{font-size:1.6rem;font-weight:900;letter-spacing:-.02em;margin-bottom:10px}
+    .proof-header p{color:var(--muted);font-size:.95rem}
+    .proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:780px;margin:0 auto}
+    @media(max-width:640px){.proof-grid{grid-template-columns:1fr 1fr}}
+    .proof-stat{text-align:center;padding:24px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:14px}
+    .proof-stat .num{font-size:2rem;font-weight:900;letter-spacing:-.03em;color:var(--cyan);margin-bottom:4px}
+    .proof-stat .label{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+    .stack{padding:100px 24px;background:linear-gradient(180deg,transparent,var(--cyan-dim) 50%,transparent)}
+    .stack-header{text-align:center;margin-bottom:48px}
+    .stack-header .eyebrow{font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin-bottom:12px}
+    .stack-header h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+    .stack-header p{color:var(--muted);font-size:1rem;max-width:600px;margin:0 auto}
+    .stack-box{max-width:780px;margin:0 auto;background:var(--bg2);border:2px solid rgba(6,182,212,.15);border-radius:24px;overflow:hidden;box-shadow:0 24px 64px var(--shadow)}
+    .stack-item{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;border-bottom:1px solid var(--border);transition:background .2s}
+    .stack-item:hover{background:rgba(6,182,212,.02)}
+    .stack-item:last-child{border-bottom:none}
+    .stack-item .item-info{flex:1}
+    .stack-item .item-name{font-weight:800;font-size:.95rem;margin-bottom:3px}
+    .stack-item .item-desc{font-size:.82rem;color:var(--muted);line-height:1.4}
+    .stack-item .item-val{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:700;color:var(--muted2);white-space:nowrap;margin-left:16px}
+    .stack-item.total{background:rgba(6,182,212,.04);border-top:2px solid var(--cyan)}
+    .stack-item.total .item-name{color:var(--cyan);font-size:1.05rem}
+    .stack-item.total .item-val{color:var(--cyan);font-size:1.1rem}
+    .pricing{text-align:center;padding:48px 28px 36px;border-top:2px solid rgba(6,182,212,.2)}
+    .pricing .anchor{font-size:1.05rem;color:var(--red);font-weight:700;text-decoration:line-through;margin-bottom:8px}
+    .pricing .price{font-size:clamp(3rem,8vw,4.5rem);font-weight:900;color:var(--cyan);letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+    .pricing .price small{font-size:1rem;color:var(--muted);font-weight:400}
+    .pricing .once{font-size:.82rem;color:var(--muted);margin-bottom:24px}
+    .pricing .btn-cta{margin:0 auto 16px}
+    .guarantee{padding:0 24px;margin-bottom:100px}
+    .guarantee-box{max-width:780px;margin:0 auto;background:linear-gradient(135deg,rgba(6,182,212,.06),rgba(34,197,94,.03));border:2px solid rgba(6,182,212,.2);border-radius:20px;padding:40px 36px;text-align:center;position:relative;overflow:hidden}
+    .guarantee-box::before{content:'🎯';position:absolute;font-size:8rem;opacity:.04;right:-20px;bottom:-30px;pointer-events:none}
+    .guarantee-box h3{font-size:1.5rem;font-weight:900;margin-bottom:14px;letter-spacing:-.01em}
+    .guarantee-box p{color:var(--muted2);font-size:.95rem;line-height:1.7;max-width:640px;margin:0 auto}
+    .guarantee-box strong{color:var(--text);font-weight:700}
+    .who{padding:80px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .who-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:820px;margin:0 auto}
+    @media(max-width:640px){.who-grid{grid-template-columns:1fr}}
+    .who-col h3{font-size:1.15rem;font-weight:900;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .who-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+    .who-col li{font-size:.9rem;color:var(--muted2);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+    .who-col li .ic{flex-shrink:0;font-size:1rem;margin-top:1px}
+    .faq{padding:80px 24px}
+    .faq-title{text-align:center;font-size:1.8rem;font-weight:900;margin-bottom:40px;letter-spacing:-.02em}
+    .faq-list{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+    .faq-item{border:1px solid var(--border);border-radius:14px;background:var(--card);overflow:hidden;transition:border-color .2s}
+    .faq-item:hover{border-color:var(--border2)}
+    .faq-item summary{padding:18px 24px;font-weight:800;font-size:.95rem;cursor:pointer;list-style:none;outline:none;display:flex;justify-content:space-between;align-items:center;-webkit-user-select:none;user-select:none}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .faq-item summary::after{content:'+';font-size:1.2rem;color:var(--cyan);font-weight:400;transition:transform .2s}
+    .faq-item[open] summary::after{transform:rotate(45deg)}
+    .faq-item .faq-body{padding:0 24px 20px;font-size:.9rem;color:var(--muted);line-height:1.65}
+    .email-box{max-width:520px;margin:32px auto 0;display:flex;flex-direction:column;gap:12px}
+    .email-box input{padding:16px 20px;border-radius:12px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:inherit;font-size:1rem;outline:none;transition:border-color .2s;width:100%}
+    .email-box input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-dim)}
+    .email-box input::placeholder{color:var(--muted)}
+    .email-box .btn-cta{max-width:100%}
+    .email-box .disclaimer{font-size:.75rem;color:var(--muted);text-align:center;margin-top:4px}
+    .portal-hero{padding:120px 24px 60px;text-align:center}
+    .portal-hero h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;letter-spacing:-.03em;margin-bottom:16px}
+    .portal-hero p{color:var(--muted2);font-size:1rem;max-width:560px;margin:0 auto}
+    .download-list{max-width:640px;margin:40px auto;display:flex;flex-direction:column;gap:12px}
+    .download-item{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}
+    .download-item:hover{border-color:var(--border2)}
+    .download-item .info{flex:1}
+    .download-item .name{font-weight:800;font-size:.95rem;margin-bottom:2px}
+    .download-item .desc{font-size:.82rem;color:var(--muted)}
+    .download-btn{padding:10px 24px;border-radius:10px;background:var(--cyan);color:#000;font-weight:800;font-size:.85rem;text-decoration:none;transition:all .2s;border:none;cursor:pointer}
+    .download-btn:hover{background:var(--blue);transform:translateY(-1px)}
+    footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+  </style>
+</head>
+<body>
+
+<nav class="top-nav" role="navigation">
+  <div class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <span class="dot"></span>
+    <span>AGENTE PESSOAL IA</span>
+  </div>
+  <button class="nav-tab active" data-tab="landing">Início</button>
+  <button class="nav-tab" data-tab="dashboard">Dashboard</button>
+  <div class="nav-right"></div>
+</nav>
+
+<main>
+
+<!-- TAB: LANDING -->
+<div class="tab-pane active" id="tab-landing">
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hook-badge">🤖 GRÁTIS — LIBERADO</div>
+    <h1>Seu <mark>Agente Pessoal de IA</mark><br>ensina você a criar agentes<br>e automatizar tarefas</h1>
+    <p class="hero-sub">
+      Chega de fazer tarefas repetitivas. Receba um <strong>kit completo com 3 mentores de IA</strong>
+      que te ensinam a criar, treinar e orquestrar seus próprios agentes — <strong>sem saber programar</strong>.
+    </p>
+    <div class="cta-cluster">
+      <a class="btn-cta btn-cyan" href="#cta-form">🔥 QUERO MEU AGENTE PESSOAL — É GRÁTIS</a>
+      <span class="micro-proof"><span class="pip"></span> Mais de 240 pessoas já ativaram</span>
+    </div>
+  </div>
+</section>
+
+<section class="terminal-wrap reveal">
+  <div class="terminal">
+    <div class="term-bar">
+      <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-label">agente-pessoal-ia — bash</span>
+    </div>
+    <div class="term-body" id="termBody">
+      <div class="term-line typed"><span class="cmd">$</span> Iniciando <span class="val">Mestre Mentor de Agentes</span>...</div>
+      <div class="term-line typed"><span class="ok">✓</span> Persona carregada: Arquiteto de Agentes de IA</div>
+      <div class="term-line typed"><span class="ok">✓</span> Missão: Ensinar você a criar seus próprios agentes</div>
+      <div class="term-line typed"><span class="ok">✓</span> 50 prompts prontos carregados</div>
+      <div class="term-line typed"><span class="ok">✓</span> Template universal de agente disponível</div>
+      <div class="term-line typed"><span class="info">ℹ</span> Guia de automação incluso</div>
+      <div class="term-line"><span class="cmd">$</span> Pronto. <span class="val">3 agentes</span> esperando seu comando.<span class="term-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pain reveal">
+  <div class="section-wrap">
+    <div class="pain-header">
+      <div class="eyebrow">⚠️ Diagnóstico</div>
+      <h2>Isso soa familiar?</h2>
+      <p>Se você já sentiu algum desses, precisa de um Agente Pessoal de IA.</p>
+    </div>
+    <div class="pain-cards">
+      <div class="pain-card">
+        <div class="pain-icon">⏰</div>
+        <div><h4>Falta de tempo</h4><p>Você passa horas em tarefas repetitivas que poderiam ser feitas por IA em segundos.</p></div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🤷</div>
+        <div><h4>"Não sei criar prompts"</h4><p>Você usa ChatGPT mas sente que as respostas são genéricas — não sabe como extrair o melhor.</p></div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📋</div>
+        <div><h4>Tarefas manuais demais</h4><p>Pesquisar, escrever, revisar, organizar — tudo na mão, toda semana, sem escala.</p></div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🧠</div>
+        <div><h4>Não sabe por onde começar</h4><p>Você já ouviu falar de "agentes de IA" mas não faz ideia de como criar um.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mechanism reveal">
+  <div class="section-wide">
+    <div class="mech-header">
+      <div class="eyebrow">🧠 O Mecanismo</div>
+      <h2>3 Agentes de IA Trabalhando pra Você</h2>
+      <p>Não é um ebook. Não é um curso. É uma célula de 3 mentores de IA que você ativa no ChatGPT/Claude/Gemini.</p>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>🎯 Mestre Mentor</h3>
+        <p>Faz 6 perguntas estratégicas, mapeia suas tarefas repetitivas e desenha o blueprint do seu primeiro agente personalizado.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>🔧 Arquiteto de Agentes</h3>
+        <p>Pega o blueprint e constrói o prompt pronto para uso. Você copia, cola e o agente já funciona.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>🛡️ Validador de Agentes</h3>
+        <p>Testa cada agente com 4 critérios. Se não passar, volta pra ajuste. Só libera agente de qualidade.</p>
+      </div>
+    </div>
+    <div class="cyber-box" style="margin-top:48px">
+      <div class="cyber-eq">
+        <span class="accent">VALOR DO KIT</span> = (Agente Personalizado × 50 Prompts Prontos) / (Tempo Recuperado × Esforço Zero)<br>
+        <span class="up">↑ Tempo recuperado: 10-20 horas/semana</span><br>
+        <span class="down">↓ Esforço: zero — só copiar e colar</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof reveal">
+  <div class="section-wide">
+    <div class="proof-header">
+      <h2>Resultados Reais</h2>
+      <p>Pessoas que ativaram o Agente Pessoal de IA</p>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-stat"><div class="num">15</div><div class="label">Min/dia economizados</div></div>
+      <div class="proof-stat"><div class="num">50</div><div class="label">Prompts prontos</div></div>
+      <div class="proof-stat"><div class="num">3</div><div class="label">Agentes no squad</div></div>
+      <div class="proof-stat"><div class="num">100%</div><div class="label">Grátis</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="stack reveal">
+  <div class="section-wide">
+    <div class="stack-header">
+      <div class="eyebrow">📦 O Que Você Recebe</div>
+      <h2>Kit Completo do Agente Pessoal de IA</h2>
+      <p>Valor total: <span class="strike">R$ 535</span> <strong class="cyan">GRÁTIS</strong></p>
+    </div>
+    <div class="stack-box" id="stackBox">
+      <div class="stack-item"><div class="item-info"><div class="item-name">🤖 Agente Pessoal de IA (Completo)</div><div class="item-desc">Célula de 3 agentes: Mestre Mentor, Arquiteto, Validador — guia você passo a passo</div></div><div class="item-val">R$ 197</div></div>
+      <div class="stack-item"><div class="item-info"><div class="item-name">⚡ Prompt Mestre</div><div class="item-desc">Versão compacta — cole e use em 30 segundos</div></div><div class="item-val">R$ 97</div></div>
+      <div class="stack-item"><div class="item-info"><div class="item-name">📘 Manual de Criação de Agentes</div><div class="item-desc">Framework, template universal, 10 exemplos prontos, pipeline de agentes</div></div><div class="item-val">R$ 97</div></div>
+      <div class="stack-item"><div class="item-info"><div class="item-name">📅 Guia de Automação de Tarefas</div><div class="item-desc">20 tarefas para automatizar HOJE, sistema de agenda semanal, gatilho → ação → revisão</div></div><div class="item-val">R$ 97</div></div>
+      <div class="stack-item"><div class="item-info"><div class="item-name">🔥 50 Prompts Prontos</div><div class="item-desc">De analista de produtividade a estrategista de LinkedIn — copie e use</div></div><div class="item-val">R$ 47</div></div>
+      <div class="stack-item total"><div class="item-info"><div class="item-name">VALOR TOTAL</div></div><div class="item-val">R$ 535</div></div>
+      <div class="pricing">
+        <div class="anchor">R$ 535</div>
+        <div class="price">GRÁTIS <small>— R$ 0</small></div>
+        <div class="once">Acesso vitalício. 100% gratuito.</div>
+        <a class="btn-cta btn-cyan" href="#cta-form">🔥 QUERO MEU KIT GRÁTIS</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="guarantee reveal">
+  <div class="section-wide">
+    <div class="guarantee-box">
+      <h3>🎯 100% Prático e Gratuito</h3>
+      <p>
+        Você não paga nada. Sério. <strong>Zero reais.</strong><br>
+        O único investimento é <strong>15 minutos respondendo as perguntas</strong> do Mestre Mentor.<br>
+        Depois você copia, cola e testa. Se em 24 horas você não criar seu primeiro agente,<br>
+        é porque a ferramenta não é pra você — e você não perdeu nada.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="who reveal">
+  <div class="section-wide">
+    <div class="who-grid">
+      <div class="who-col">
+        <h3>✅ Pra quem é</h3>
+        <ul>
+          <li><span class="ic">👨‍💼</span> Profissionais que querem automatizar tarefas repetitivas</li>
+          <li><span class="ic">📢</span> Marketers que criam conteúdo toda semana</li>
+          <li><span class="ic">🧑‍🎓</span> Estudantes que precisam organizar pesquisa e estudo</li>
+          <li><span class="ic">💼</span> Empreendedores que fazem de tudo e não têm tempo</li>
+          <li><span class="ic">🤖</span> Curiosos por IA que querem ir além do básico</li>
+          <li><span class="ic">👤</span> Qualquer pessoa que usa ChatGPT/Claude/Gemini</li>
+        </ul>
+      </div>
+      <div class="who-col">
+        <h3>❌ Pra quem NÃO é</h3>
+        <ul>
+          <li><span class="ic">🙅</span> Quem espera "IA mágica que faz tudo"</li>
+          <li><span class="ic">🙅</span> Quem não quer gastar 15 minutos aprendendo</li>
+          <li><span class="ic">🙅</span> Quem já domina engenharia de prompts avançada</li>
+          <li><span class="ic">🙅</span> Quem quer código ou programação</li>
+          <li><span class="ic">🙅</span> Quem não tem tarefas repetitivas na rotina</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq reveal" id="faq">
+  <h2 class="faq-title">❓ Perguntas Frequentes</h2>
+  <div class="faq-list">
+    <details class="faq-item"><summary>O que é exatamente o Agente Pessoal de IA?</summary><div class="faq-body">É um prompt especializado que você cola no ChatGPT (grátis), Claude ou Gemini. Ele se transforma em 3 mentores de IA que te ensinam a criar seus próprios agentes e automatizar tarefas. Não é software, não é app — é conhecimento ativável.</div></details>
+    <details class="faq-item"><summary>Preciso saber programar?</summary><div class="faq-body">Não. Zero código. Você só precisa saber copiar, colar e responder perguntas. Se você sabe usar WhatsApp, sabe usar isso.</div></details>
+    <details class="faq-item"><summary>Funciona no ChatGPT grátis?</summary><div class="faq-body">Sim. Funciona no ChatGPT (qualquer versão), Claude (grátis e Pro) e Gemini. Quanto melhor o modelo, melhor o resultado, mas a versão grátis já entrega valor.</div></details>
+    <details class="faq-item"><summary>É realmente grátis?</summary><div class="faq-body">Sim. R$ 0. Só pedimos seu email para enviar o link de download. Você não será cobrado nunca.</div></details>
+    <details class="faq-item"><summary>Quanto tempo leva para criar meu primeiro agente?</summary><div class="faq-body">Cerca de 15-20 minutos. Você cola o prompt, responde 6 perguntas, e recebe seu agente personalizado pronto para uso.</div></details>
+    <details class="faq-item"><summary>O que eu ganho com isso?</summary><div class="faq-body">Você ganha a capacidade de criar agentes de IA que executam tarefas no seu lugar. Isso significa horas recuperadas toda semana, menos trabalho repetitivo e mais tempo para o que importa.</div></details>
+  </div>
+</section>
+
+<section style="padding:60px 24px 100px;text-align:center;border-top:1px solid var(--border)" id="cta-form">
+  <div class="section-wrap">
+    <h2 style="font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;letter-spacing:-.02em;margin-bottom:12px">
+      🔥 Ative Seu Agente Pessoal de IA Agora
+    </h2>
+    <p style="color:var(--muted2);margin-bottom:8px;font-size:1rem">
+      Grátis. Vitalício. Sem pegadinha.
+    </p>
+    <div class="email-box">
+      <input type="email" placeholder="Seu melhor email" id="leadEmail" />
+      <button class="btn-cta btn-cyan" onclick="handleLead()">🚀 ENVIAR MEU KIT GRÁTIS</button>
+      <span class="disclaimer">Seus dados são seguros. Não enviamos spam.</span>
+    </div>
+    <div id="leadResult" style="margin-top:20px;font-size:0.95rem;font-weight:700"></div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Agente Pessoal de IA — Metodologia baseada em boas práticas de arquitetura de agentes.</p>
+</footer>
+
+</div><!-- /tab-landing -->
+
+<!-- TAB: DASHBOARD -->
+<div class="tab-pane" id="tab-dashboard">
+  <section class="hero" style="padding:120px 24px 40px">
+    <div class="hero-inner">
+      <div class="hook-badge" style="margin-bottom:16px">📊 CONSOLE DE RUNS</div>
+      <h1 style="font-size:clamp(1.6rem,3.5vw,2.6rem);margin-bottom:12px">Dashboard de <mark>Ativações</mark></h1>
+      <p class="hero-sub" style="font-size:.95rem" id="dashDate">Carregando...</p>
+    </div>
+  </section>
+  <section style="padding:0 24px 80px">
+    <div class="section-wide">
+      <div id="dashContent">
+        <div class="proof-grid" style="margin-bottom:40px" id="dashStats"></div>
+        <div id="dashOutput" style="max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:16px"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<script>
+// ─── Tab system ───
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ─── Terminal typewriter ───
+(function(){
+  const lines = document.querySelectorAll('.term-line:not(.typed)');
+  if(!lines.length) return;
+  let i = 0;
+  function typeNext(){
+    if(i >= lines.length) return;
+    const l = lines[i];
+    l.classList.add('typed');
+    i++;
+    const delay = l.textContent.length > 60 ? 30 : 20;
+    setTimeout(typeNext, delay * l.textContent.length);
+  }
+  setTimeout(typeNext, 800);
+})();
+
+// ─── Intersection Observer ───
+(function(){
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: .08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+})();
+
+// ─── Stack animation ───
+(function(){
+  const stack = document.getElementById('stackBox');
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: .2 });
+    obs.observe(stack);
+  }
+})();
+
+// ─── Lead capture ───
+function handleLead(){
+  const email = document.getElementById('leadEmail').value.trim();
+  const result = document.getElementById('leadResult');
+  if(!email || !email.includes('@')){
+    result.style.color = 'var(--red)';
+    result.textContent = '⚠️ Digite um email válido.';
+    return;
+  }
+  result.style.color = 'var(--cyan)';
+  result.textContent = '✅ Pronto! Redirecionando para seu kit gratuito...';
+  setTimeout(() => { window.location.href = 'portal.html?email=' + encodeURIComponent(email); }, 1200);
+}
+
+// ─── Dashboard data ───
+(function(){
+  fetch('dashboard-data.json?' + Date.now())
+    .then(r => r.json())
+    .then(d => {
+      document.getElementById('dashDate').textContent = 'Gerado em ' + new Date(d.generatedAt).toLocaleString('pt-BR');
+      const stats = document.getElementById('dashStats');
+      const items = [
+        d.summary.totalRuns + ' Ativações',
+        d.summary.successRate + '% Sucesso',
+        d.summary.agentsCount + ' Agentes',
+        d.summary.targetsCount + ' Agentes Criados'
+      ];
+      items.forEach((v,i) => {
+        const div = document.createElement('div');
+        div.className = 'proof-stat';
+        div.innerHTML = '<div class="num">' + v.split(' ')[0] + '</div><div class="label">' + v.split(' ').slice(1).join(' ') + '</div>';
+        stats.appendChild(div);
+      });
+      const out = document.getElementById('dashOutput');
+      if(d.runs && d.runs.length){
+        d.runs.forEach(run => {
+          const box = document.createElement('div');
+          box.className = 'terminal';
+          box.innerHTML = '<div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-label">run-' + run.id + '</span></div><div class="term-body" style="font-size:.78rem">' +
+            '<div><span class="info">target</span> ' + run.target + '</div>' +
+            '<div><span class="ok">score</span> ' + run.overallScore + '/100</div>' +
+            '<div style="margin-top:8px;color:var(--muted2)">' + run.summary + '</div></div>';
+          out.appendChild(box);
+        });
+      }
+    })
+    .catch(() => {
+      document.getElementById('dashDate').textContent = 'Dashboard offline — rode o pipeline para gerar dados.';
+    });
+})();
+</script>
+</body>
+</html>

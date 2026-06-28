@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Seu Kit — Agente Pessoal de IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#05080f;color:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+.portal{max-width:680px;width:100%;text-align:center}
+.portal h1{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+.portal h1 mark{background:linear-gradient(135deg,#06b6d4,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.portal .sub{color:#9ca3b4;font-size:1rem;margin-bottom:36px}
+.download-list{display:flex;flex-direction:column;gap:10px;margin-bottom:40px}
+.item{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:#0a0e1a;border:1px solid rgba(255,255,255,.06);border-radius:12px;text-align:left;transition:border-color .2s}
+.item:hover{border-color:rgba(6,182,212,.2)}
+.item .info{flex:1}
+.item .name{font-weight:800;font-size:.92rem;margin-bottom:2px}
+.item .desc{font-size:.8rem;color:#7a8194}
+.btn{display:inline-block;padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#06b6d4,#3b82f6);color:#000;font-weight:800;font-size:.82rem;text-decoration:none;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(6,182,212,.3)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.12);color:#f0f2f5}
+.btn-ghost:hover{background:rgba(255,255,255,.04)}
+.instructions{background:#0f1525;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:28px;text-align:left;margin-bottom:36px}
+.instructions h3{font-size:1.05rem;font-weight:800;margin-bottom:14px;color:#06b6d4}
+.instructions ol{list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:10px}
+.instructions li{font-size:.9rem;color:#9ca3b4;line-height:1.6}
+.instructions li strong{color:#f0f2f5}
+.email-confirmed{padding:8px 16px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2);border-radius:8px;color:#06b6d4;font-size:.85rem;font-weight:700;margin-bottom:24px;display:inline-block}
+footer{margin-top:20px;color:#7a8194;font-size:.78rem}
+</style>
+</head>
+<body>
+<div class="portal">
+  <div class="email-confirmed" id="emailDisplay">📧 Email confirmado</div>
+  <h1>Seu Kit <mark>Agente Pessoal de IA</mark></h1>
+  <p class="sub">Baixe os arquivos abaixo e ative seu squad de agentes em 5 minutos.</p>
+
+  <div class="download-list">
+    <div class="item">
+      <div class="info"><div class="name">🤖 AGENTE-PESSOAL-IA.md</div><div class="desc">O agente completo com 3 mentores — cole no ChatGPT/Claude/Gemini</div></div>
+      <a class="btn" href="produto/AGENTE-PESSOAL-IA.md" download>Baixar</a>
+    </div>
+    <div class="item">
+      <div class="info"><div class="name">⚡ PROMPT-MESTRE.md</div><div class="desc">Versão compacta — cole e use em 30 segundos</div></div>
+      <a class="btn" href="produto/PROMPT-MESTRE.md" download>Baixar</a>
+    </div>
+    <div class="item">
+      <div class="info"><div class="name">📘 BONUS-01 — Manual de Criação de Agentes</div><div class="desc">Framework, template universal, 10 exemplos prontos</div></div>
+      <a class="btn" href="produto/BONUS-01-CRIAR-AGENTES.md" download>Baixar</a>
+    </div>
+    <div class="item">
+      <div class="info"><div class="name">📅 BONUS-02 — Guia de Automação de Tarefas</div><div class="desc">20 tarefas para automatizar + sistema de agenda semanal</div></div>
+      <a class="btn" href="produto/BONUS-02-AGENDAR-TAREFAS.md" download>Baixar</a>
+    </div>
+    <div class="item">
+      <div class="info"><div class="name">🔥 BONUS-03 — 50 Prompts Prontos</div><div class="desc">De analista a estrategista — copie e use imediatamente</div></div>
+      <a class="btn" href="produto/BONUS-03-PROMPTS-PRONTOS.md" download>Baixar</a>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <h3>🚀 Como Usar (5 minutos)</h3>
+    <ol>
+      <li><strong>Abra o arquivo AGENTE-PESSOAL-IA.md</strong> e copie todo o conteúdo</li>
+      <li><strong>Cole no ChatGPT</strong> (versão grátis funciona), Claude ou Gemini</li>
+      <li>O <strong>Mestre Mentor</strong> vai aparecer e fazer <strong>6 perguntas</strong> — responda uma de cada vez</li>
+      <li>Em 15-20 minutos você recebe seu <strong>primeiro agente personalizado</strong>, pronto para copiar e usar</li>
+      <li>Depois explore os <strong>bônus</strong> para criar mais agentes e automatizar tarefas</li>
+    </ol>
+  </div>
+
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a class="btn" href="index.html">← Voltar</a>
+    <a class="btn btn-ghost" href="https://github.com/cspgabriel/agente-pessoal-ia" target="_blank">Ver no GitHub</a>
+  </div>
+
+  <footer>© 2026 Agente Pessoal de IA — Grátis. Vitalício. Sem pegadinha.</footer>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const email = params.get('email');
+if(email) document.getElementById('emailDisplay').textContent = '📧 ' + email;
+</script>
+</body>
+</html>
