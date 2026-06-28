@@ -223,6 +223,10 @@ Workflows drag-and-drop que disparam emails baseado em eventos (signup, open, cl
 
 ### Recomendação: "Welcome + Nurture 14 dias"
 
+**Documentação oficial Brevo:** https://help.brevo.com/hc/en-us/articles/360000418170-Creating-an-automation-workflow
+
+![Brevo automation docs](https://help.brevo.com/hc/en-us/articles/360000418170-Creating-an-automation-workflow)
+
 **Como criar (drag-and-drop no dashboard):**
 
 1. https://app.brevo.com/automation/list → "Create a workflow"
@@ -262,6 +266,21 @@ Workflows drag-and-drop que disparam emails baseado em eventos (signup, open, cl
 - `engaged` (abriu 3+ emails)
 - `cold` (não abriu nenhum)
 - `clicked-cta` (clicou no link da AgenciAR)
+
+**Passo-a-passo detalhado (com prints):**
+
+| # | Onde | O que fazer | Screenshot |
+|---|---|---|---|
+| 1 | https://app.brevo.com/automation/list | Clicar em "Create a workflow" | — |
+| 2 | Tela de templates | Escolher **"Welcome new contacts"** | — |
+| 3 | Editor visual | Adicionar steps arrastando blocos da sidebar esquerda | — |
+| 4 | Step "Send email" | Selecionar template "Welcome" (criado anteriormente) | — |
+| 5 | Step "Wait" | Definir delay (ex: 2 days) | — |
+| 6 | Step "Condition" | "If contact opened previous email" → Yes/No branch | — |
+| 7 | Step "Add tag" | Adicionar `nurture-active` no fim | — |
+| 8 | Top-right | Clicar "Activate" | — |
+
+**Dica:** após ativar, teste com seu próprio email (adicione na lista manualmente) pra ver o flow completo antes de ir pro ar.
 
 ---
 
