@@ -1,0 +1,18 @@
+name = "agente-pessoal-ia"
+compatibility_date = "2025-06-01"
+pages_build_output_dir = "."
+
+[build]
+command = ""
+
+[vars]
+# Variáveis não-secretas (públicas)
+BREVO_FROM_EMAIL = "gabriel@agenciarmktdigital.com.br"
+BREVO_FROM_NAME = "AgenciAR Digital"
+REDIRECT_URL = "/portal.html"
+
+# Secrets (configure separately com `wrangler pages secret put NOME`)
+# BREVO_API_KEY
+# BREVO_LIST_ID
+# BREVO_WELCOME_TEMPLATE_ID
+# TRACKING_WEBHOOK_URL
